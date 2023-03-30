@@ -36,14 +36,16 @@ def age_hist(data : list, ident : list):
         Process the data to allow displayment
     """
 
-    # Create a simple histogramm of 
+    # Build a list of all the age datapoints to create a hist from
     age_list = []
     age_index = ident.index("Age")
+    
     for index, wine in enumerate(data):
         age_list.append(wine[age_index])
 
     # Get Histogramm of the Qualities
     # [TODO] Make it prettier
+    # [TODO] Hist seems to make some classes form the ages. Maybe as barchart
     plt.hist(age_list)
     plt.xlim(14, 50)
     plt.show()
