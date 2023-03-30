@@ -28,23 +28,25 @@ def data_import(path):
             data_ident = data_ident.split(",")
 
         # Read the data
-        data = np.genfromtxt(path, delimiter=",", skip_header=True)
+        data = np.genfromtxt(path, delimiter=",", skip_header=True, usecols=np.arange(0, len(data_ident)))
 
     return data_ident, data
 
 
-def data_processing(data):
+def age_hist(data : list, ident : list):
     """
         Process the data to allow displayment
     """
 
-    quality_list = []
+    # Create a simple histogramm of 
+    age_list = []
+    age_index = ident.index("Age")
     for index, wine in enumerate(data):
-        quality_list.append(wine[-1])
+        age_list.append(wine[age_index])
 
     # Get Histogramm of the Qualities
-    plt.hist(quality_list)
-    plt.xlim(0, 10)
+    plt.hist(age_list)
+    plt.xlim(14, 50)
     plt.show()
 
 
@@ -52,9 +54,10 @@ def data_processing(data):
 if __name__ == "__main__":
 
     # Data import
-    data_indent, np_data = data_import(path="./data/winequality-red.csv")
+    data_ident, np_data = data_import(path="./data/fifa19.csv")
 
-    data_processing(data=np_data)
+    # Quick histogramm of the age of players
+    age_hist(data=np_data, ident=data_ident)
 
 
     exit()
