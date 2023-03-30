@@ -8,8 +8,6 @@
 
     Following the stochastics course B. Staehle
 
-    What factors make a good red wine?
-
 """
 
 #===== LIBRARIES =====================================
@@ -45,6 +43,7 @@ def age_hist(data : list, ident : list):
         age_list.append(wine[age_index])
 
     # Get Histogramm of the Qualities
+    # [TODO] Make it prettier
     plt.hist(age_list)
     plt.xlim(14, 50)
     plt.show()
