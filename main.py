@@ -11,13 +11,20 @@
 """
 
 #===== LIBRARIES =====================================
-import numpy as np
 from matplotlib import pyplot as plt
+
+#===== MODULES =======================================
+from src.origin_analysis import (
+    get_origin_stats,
+    visualize_origin_data
+)
 
 
 #===== FUNCTIONS =====================================
 def data_import(path):
     
+    data = []
+
     if ".csv" in path:
         
         # Read the first line for the identation
@@ -25,8 +32,8 @@ def data_import(path):
             data_ident = data_file.readline()
             data_ident = data_ident.split(",")
 
-        # Read the data
-        data = np.genfromtxt(path, delimiter=",", skip_header=True, usecols=np.arange(0, len(data_ident)))
+            for line in data_file:
+                data.append(line.split(","))
 
     return data_ident, data
 
@@ -50,7 +57,6 @@ def age_hist(data : list, ident : list):
     plt.xlim(14, 50)
     plt.show()
 
-
 #===== MAIN ==========================================
 if __name__ == "__main__":
 
@@ -58,7 +64,7 @@ if __name__ == "__main__":
     data_ident, np_data = data_import(path="./data/fifa19.csv")
 
     # Quick histogramm of the age of players
-    age_hist(data=np_data, ident=data_ident)
+    #age_hist(data=np_data, ident=data_ident)
 
-
-    exit()
+    data = get_origin_stats(data=np_data, ident=data_ident)
+    visualize_origin_data(data=data)
