@@ -10,6 +10,10 @@
 
 #===== MODULES =======================================
 from src.helpers import parse_money
+from src.const import (
+    BASE_COLOR,
+    SEC_COLOR
+)
 
 #===== LIBRARIES =====================================
 from matplotlib import pyplot as plt
@@ -31,6 +35,7 @@ def get_origin_stats(data : list, ident: list):
     value = ident.index("Value")
     strong_foot = ident.index("Preferred Foot")
     speed = ident.index("SprintSpeed")
+    wage = ident.index("Wage")
 
     # Build list according to origin
     for player in data:
@@ -40,14 +45,19 @@ def get_origin_stats(data : list, ident: list):
             data_dict[player[origin]] = {
                 "value" : [],
                 "strong_foot" : [],
-                "speed" : []
+                "speed" : [],
+                "wage" : []
             }
         
+        if parse_money(player[wage]) <= 10000:
+            continue
+
         # Append the value
         try:
             data_dict[player[origin]]["value"].append(parse_money(player[value]))
             data_dict[player[origin]]["strong_foot"].append(player[strong_foot])
             data_dict[player[origin]]["speed"].append(int(player[speed]))
+            data_dict[player[origin]]["wage"].append(parse_money(player[wage]))
         except ValueError:
             print("[WARN]\tSkipped one entry because of missing data")
             continue
@@ -67,7 +77,7 @@ def visualize_origin_data(data : dict):
     data_ident = []
     data_list = []
 
-    countries_of_interest = ["Germany", "England"]
+    countries_of_interest = ["Germany", "England", "France", "Spain"]
 
     # Build list for every country
     for country in data:
@@ -75,20 +85,42 @@ def visualize_origin_data(data : dict):
         if country in countries_of_interest:
 
             data_ident.append(country)
-            data_list.append(data[country]["value"])
-
-
-    print(data_list)
-
+            data_list.append(data[country]["wage"])
 
     # Define the figure
     fig = plt.figure(figsize =(10, 7))
     ax = fig.add_subplot(111)
 
+    bp = ax.boxplot(data_list, notch="True", patch_artist=True)
 
-    out_plot = ax.boxplot(data_list, notch="True")
+    # Set color theme
+    for patch in bp['boxes']:
+        patch.set_facecolor(BASE_COLOR)
+ 
+    # changing color and linewidth of
+    # whiskers
+    for whisker in bp['whiskers']:
+        whisker.set(color =SEC_COLOR,
+                    linewidth = 1.5,
+                    linestyle =":")
+    
+    # changing color and linewidth of
+    # caps
+    for cap in bp['caps']:
+        cap.set(color =SEC_COLOR,
+                linewidth = 2)
+    
+    # changing color and linewidth of
+    # medians
+    for median in bp['medians']:
+        median.set(color ='red',
+                linewidth = 3)
+
 
     ax.set_xticklabels(data_ident)
+    ax.set_ylabel("Wage [€]")
 
+    # Set overall parameters
+    plt.title("Boxplot Wage / Nationality")
     plt.show()
 

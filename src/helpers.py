@@ -24,13 +24,16 @@ def parse_money(money_string: str):
     money_string = money_string[3:-1]
 
     if multiplicator == "M":
-        return int(float(money_string) * 10**6)
+        result = int(float(money_string) * 10**6)
 
     elif multiplicator == "K":
-        return int(float(money_string) * 10**3)
+        result = int(float(money_string) * 10**3)
 
     elif multiplicator == "0":
-        return 0
+        result = 0
 
     else:
         print(f"[ERROR] Got unknown money multiplicator: {multiplicator}! Please add!")
+        exit()
+
+    return result
