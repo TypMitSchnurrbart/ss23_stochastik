@@ -11,6 +11,9 @@
 #===== MODULES =======================================
 from src.helpers import parse_money
 
+#===== LIBRARIES =====================================
+from matplotlib import pyplot as plt
+
 #===== BUILD-INS =====================================
 import json
 
@@ -46,6 +49,7 @@ def get_origin_stats(data : list, ident: list):
             data_dict[player[origin]]["strong_foot"].append(player[strong_foot])
             data_dict[player[origin]]["speed"].append(int(player[speed]))
         except ValueError:
+            print("[WARN]\tSkipped one entry because of missing data")
             continue
 
     return data_dict
@@ -57,4 +61,34 @@ def visualize_origin_data(data : dict):
     get_origin_stats()
     """
 
-    pass
+    # Try to show box plot for every country of value
+
+    # Init sublists
+    data_ident = []
+    data_list = []
+
+    countries_of_interest = ["Germany", "England"]
+
+    # Build list for every country
+    for country in data:
+
+        if country in countries_of_interest:
+
+            data_ident.append(country)
+            data_list.append(data[country]["value"])
+
+
+    print(data_list)
+
+
+    # Define the figure
+    fig = plt.figure(figsize =(10, 7))
+    ax = fig.add_subplot(111)
+
+
+    out_plot = ax.boxplot(data_list, notch="True")
+
+    ax.set_xticklabels(data_ident)
+
+    plt.show()
+

@@ -66,5 +66,5 @@ if __name__ == "__main__":
     # Quick histogramm of the age of players
     #age_hist(data=np_data, ident=data_ident)
 
-    data = get_origin_stats(data=np_data, ident=data_ident)
-    visualize_origin_data(data=data)
+    origin_data = get_origin_stats(data=np_data, ident=data_ident)
+    visualize_origin_data(data=origin_data)
