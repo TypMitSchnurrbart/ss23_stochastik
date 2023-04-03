@@ -13,7 +13,9 @@
 #===== LIBRARIES =====================================
 import numpy as np
 from matplotlib import pyplot as plt
-
+import seaborn as sns
+import pandas as pd
+import statistics
 
 #===== FUNCTIONS =====================================
 def data_import(path):
@@ -40,14 +42,74 @@ def age_hist(data : list, ident : list):
     age_list = []
     age_index = ident.index("Age")
     
-    for index, wine in enumerate(data):
-        age_list.append(wine[age_index])
+    for index, element in enumerate(data):
+        age_list.append(element[age_index])
 
     # Get Histogramm of the Qualities
     # [TODO] Make it prettier
     # [TODO] Hist seems to make some classes form the ages. Maybe as barchart
-    plt.hist(age_list)
-    plt.xlim(14, 50)
+    sns.distplot(age_list, hist=True, kde=True, bins=30, color="blue",
+                 hist_kws={"alpha": 0.5, "histtype": "bar", "ec": "black"},
+                 kde_kws={"shade": True})
+    plt.axvline(statistics.median(age_list), color="red", linestyle="solid", linewidth=1, label="Median Age")
+    plt.xlabel("Age")
+    plt.ylabel("Density")
+    plt.title("Age Distribution of the Players")
+    plt.legend()
+    plt.show()
+
+def ageWorth():
+    """
+        Plot the age of the players against their worth
+    """
+    df = pd.read_csv("./data/fifa19.csv")
+    
+    # Convert Value column to numeric
+    #df['Value'] = df['Value'].str[1:].str.replace('.', '').str.replace('K', '000').str.replace('M', '000000')
+    df['Value'] = df['Value'].str[1:]
+    df['Value'] = np.where(df['Value'].str.contains('.'), 
+                       df['Value'].str.replace('K', '00').str.replace('M', '00000'), 
+                       df['Value'].str.replace('K', '000').str.replace('M', '000000'))
+    df['Value'] = df['Value'].str.replace('.', '', regex=False)
+    df['Value'] = pd.to_numeric(df['Value'])
+
+    # Create a new dataframe with only the age and value columns
+    age_value_df = df[["Age", "Value"]]
+    age_value_df = age_value_df[(age_value_df["Age"] != 0) & (age_value_df["Value"] != 0)]
+    # Convert the dataframe to a list
+    valueList = age_value_df["Value"].tolist()
+    ageList = age_value_df["Age"].tolist()
+
+
+    # Print out Information
+    print("|=============================================|")
+    print("|Further Information:                         |")
+    print("|=============================================|")
+    print("|Value Information:                           |")
+    print(f"|Mean Value: {statistics.mean(valueList)}               |")
+    print(f"|Median Value: {statistics.median(valueList)}                          |") 
+    print(f"|Standard Deviation Value: {statistics.stdev(valueList)} |")
+    print(f"|Variance Value: {statistics.variance(valueList)}           |")
+    print(f"|Min Value: {min(valueList)}                              |")
+    print(f"|Max Value: {max(valueList)}                         |")
+    print("|=============================================|")
+    print("|Age Information:                             |")
+    print(f"|Mean Value: {statistics.mean(ageList)}               |")
+    print(f"|Median Value: {statistics.median(ageList)}                             |") 
+    print(f"|Standard Deviation Value: {statistics.stdev(ageList)}  |")
+    print(f"|Variance Value: {statistics.variance(ageList)}            |")
+    print(f"|Min Value: {min(ageList)}                                |")
+    print(f"|Max Value: {max(ageList)}                                |")
+    print("|=============================================|")
+
+    # Plot the data
+    plt.scatter(ageList, valueList, alpha=0.5)
+    plt.axhline(y=statistics.mean(valueList), color="red", linestyle="dashed", linewidth=1, label="Mean Value")
+    #plt.ylim(0, 40_000_000)
+    plt.xlabel("Age")
+    plt.ylabel("Value of the Player in €")
+    plt.title("Age of the Players against their Value")
+    plt.legend()
     plt.show()
 
 
@@ -56,9 +118,8 @@ if __name__ == "__main__":
 
     # Data import
     data_ident, np_data = data_import(path="./data/fifa19.csv")
-
     # Quick histogramm of the age of players
-    age_hist(data=np_data, ident=data_ident)
-
+    #age_hist(data=np_data, ident=data_ident)
+    ageWorth()
 
     exit()
