@@ -4,5 +4,5 @@
 """
 
 # Base Color Theme
-BASE_COLOR = "#ff6a00"
-SEC_COLOR = "#A2908E"
+BASE_COLOR = "#b5ffb9"
+SEC_COLOR = '#f9bc86'

@@ -16,7 +16,8 @@ from matplotlib import pyplot as plt
 #===== MODULES =======================================
 from src.origin_analysis import (
     get_origin_stats,
-    visualize_origin_data
+    visualize_origin_data,
+    analyze_strong_foot
 )
 
 
@@ -67,4 +68,8 @@ if __name__ == "__main__":
     #age_hist(data=np_data, ident=data_ident)
 
     origin_data = get_origin_stats(data=np_data, ident=data_ident)
+
+
     visualize_origin_data(data=origin_data)
+    analyze_strong_foot(data=origin_data)
+

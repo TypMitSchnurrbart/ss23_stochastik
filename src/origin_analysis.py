@@ -64,7 +64,7 @@ def get_origin_stats(data : list, ident: list):
 
     return data_dict
 
-
+# ====================================================
 def visualize_origin_data(data : dict):
     """
     Visualize the prepared data from
@@ -113,7 +113,7 @@ def visualize_origin_data(data : dict):
     # changing color and linewidth of
     # medians
     for median in bp['medians']:
-        median.set(color ='red',
+        median.set(color ='#FF5349',
                 linewidth = 3)
 
 
@@ -123,4 +123,61 @@ def visualize_origin_data(data : dict):
     # Set overall parameters
     plt.title("Boxplot Wage / Nationality")
     plt.show()
+
+
+# ====================================================
+def analyze_strong_foot(data: dict):
+    """
+    Analyze the averages of strong foots per country
+    """
+
+    # Compute the averages of left / right foots per country
+    foot_data = {}
+    for country in data:
+
+        # Get number of dataset per country
+        players = len(data[country]["strong_foot"])
+
+        # Only look at stats that actually are representable
+        # 
+        if players < 50:
+            continue
+
+        # Get number of right strong players and compute average
+        right_strong = data[country]["strong_foot"].count("Right")
+        foot_data[country] = (right_strong / players)
+    
+    
+    foot_data = sorted(foot_data.items(), key=lambda x:x[1])
+
+    
+    # plot a Stacked Bar Chart using matplotlib
+    bar_pos = []
+    values = []
+    neg_values = []
+    country_list = []
+    for index, country in enumerate(foot_data):
+        
+        bar_pos.append(index)
+        country_list.append(country[0])
+        values.append(country[1])
+        neg_values.append(1 - country[1])
+
+    # Visualize
+    barWidth = 0.5
+    # Create green Bars
+    test = plt.bar(bar_pos, values, color=BASE_COLOR, edgecolor='white', width=barWidth)
+    # Create orange Bars
+    testo = plt.bar(bar_pos, neg_values, bottom=values, color=SEC_COLOR, edgecolor='white', width=barWidth)
+
+    plt.title("Relative frequency of preferred foot per nationality")
+    plt.ylabel("Relative frequency")
+    plt.xlabel("Nationality")
+    plt.xticks(bar_pos, country_list)
+
+    plt.legend([test, testo], ["Right Foot", "Left Foot"])
+
+    plt.show()
+
+
 
