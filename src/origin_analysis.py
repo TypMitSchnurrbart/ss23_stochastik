@@ -10,9 +10,10 @@
 
 #===== MODULES =======================================
 from src.helpers import parse_money
-from src.const import (
+from src.config import (
     BASE_COLOR,
-    SEC_COLOR
+    SEC_COLOR,
+    COUNTRIES_OF_INTEREST
 )
 
 #===== LIBRARIES =====================================
@@ -77,12 +78,10 @@ def visualize_origin_data(data : dict):
     data_ident = []
     data_list = []
 
-    countries_of_interest = ["Germany", "England", "France", "Spain"]
-
     # Build list for every country
     for country in data:
 
-        if country in countries_of_interest:
+        if country in COUNTRIES_OF_INTEREST:
 
             data_ident.append(country)
             data_list.append(data[country]["wage"])
@@ -119,6 +118,10 @@ def visualize_origin_data(data : dict):
 
     ax.set_xticklabels(data_ident)
     ax.set_ylabel("Wage [€]")
+
+    plt.ylim([3000, 80000])
+    plt.tight_layout()
+
 
     # Set overall parameters
     plt.title("Boxplot Wage / Nationality")
@@ -178,6 +181,67 @@ def analyze_strong_foot(data: dict):
     plt.legend([test, testo], ["Right Foot", "Left Foot"])
 
     plt.show()
+
+
+#=====================================================
+def origin_to_speed(data : dict):
+    """
+    Mopdule to show the different speed of different countries
+    """
+
+    # Init sublists
+    data_ident = []
+    data_list = []
+
+    # Build list for every country
+    for country in data:
+
+        if country in COUNTRIES_OF_INTEREST:
+
+            data_ident.append(country)
+            data_list.append(data[country]["speed"])
+
+    # Define the figure
+    fig = plt.figure(figsize =(10, 7))
+    ax = fig.add_subplot(111)
+
+    bp = ax.boxplot(data_list, notch="True", patch_artist=True)
+
+    # Set color theme
+    for patch in bp['boxes']:
+        patch.set_facecolor(BASE_COLOR)
+ 
+    # changing color and linewidth of
+    # whiskers
+    for whisker in bp['whiskers']:
+        whisker.set(color =SEC_COLOR,
+                    linewidth = 1.5,
+                    linestyle =":")
+    
+    # changing color and linewidth of
+    # caps
+    for cap in bp['caps']:
+        cap.set(color =SEC_COLOR,
+                linewidth = 2)
+    
+    # changing color and linewidth of
+    # medians
+    for median in bp['medians']:
+        median.set(color ='#FF5349',
+                linewidth = 3)
+
+
+    ax.set_xticklabels(data_ident)
+    ax.set_ylabel("Speed Value [0,100]")
+
+    # Formating
+    plt.ylim([20, 105])
+    plt.tight_layout()
+
+    # Set overall parameters
+    plt.title("Boxplot Speed / Nationality")
+    plt.show()
+
 
 
 

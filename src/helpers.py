@@ -21,7 +21,7 @@ def parse_money(money_string: str):
 
     # Get rid of first sign
     multiplicator = money_string[-1]
-    money_string = money_string[3:-1]
+    money_string = money_string[1:-1]
 
     if multiplicator == "M":
         result = int(float(money_string) * 10**6)
