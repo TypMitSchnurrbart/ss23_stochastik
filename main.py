@@ -103,13 +103,13 @@ def ageWorth():
     print("|=============================================|")
 
     # Plot the data
-    plt.scatter(ageList, valueList, alpha=0.5)
-    plt.axhline(y=statistics.mean(valueList), color="red", linestyle="dashed", linewidth=1, label="Mean Value")
-    #plt.ylim(0, 40_000_000)
-    plt.xlabel("Age")
-    plt.ylabel("Value of the Player in €")
-    plt.title("Age of the Players against their Value")
-    plt.legend()
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.scatter(ageList, valueList, alpha=0.5)
+    ax.axhline(y=statistics.mean(valueList), color="red", linestyle="dashed", linewidth=1, label="Mean Value")
+    ax.set_xlabel("Age")
+    ax.set_ylabel("Value of the Player in €")
+    ax.set_title("Age of the Players against their Value")
+    ax.legend()
     plt.show()
 
 
