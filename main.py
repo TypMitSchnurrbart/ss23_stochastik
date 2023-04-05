@@ -21,6 +21,11 @@ from src.origin_analysis import (
     origin_to_speed
 )
 
+from src.correlation_analysis import (
+    get_correlation_data,
+    compute_correlation_matrix
+)
+
 
 #===== FUNCTIONS =====================================
 def data_import(path):
@@ -47,9 +52,15 @@ if __name__ == "__main__":
     data_ident, np_data = data_import(path="./data/fifa19.csv")
 
     # Origin Analysis
+    """
     origin_data = get_origin_stats(data=np_data, ident=data_ident)
 
     visualize_origin_data(data=origin_data)
     analyze_strong_foot(data=origin_data)
     origin_to_speed(data=origin_data)
+    """
+
+    # Correlation Analysis
+    correlation_data, ident = get_correlation_data(data=np_data, ident=data_ident)
+    compute_correlation_matrix(data=correlation_data, ident=ident)
 
