@@ -119,7 +119,7 @@ def visualize_origin_data(data : dict):
     ax.set_xticklabels(data_ident)
     ax.set_ylabel("Wage [€]")
 
-    plt.ylim([3000, 80000])
+    plt.ylim([3000, 100000])
     plt.tight_layout()
 
 

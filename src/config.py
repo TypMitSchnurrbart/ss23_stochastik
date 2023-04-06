@@ -9,8 +9,8 @@ SEC_COLOR = '#f9bc86'
 REG_COLOR = "#d20404"
 
 # Countires to evaluate
-COUNTRIES_OF_INTEREST = ["Germany", "England", "Brazil", "Argentina", "Denmark", "Italy"]
+COUNTRIES_OF_INTEREST = ["Germany", "England", "Brazil", "Argentina", "Japan", "Italy"]
 
 # Stats for the Regression as list in list! [[], [], ...]
 # Please only use Player stats from [0, 100] that are already in the corr_matrix
-CORR_STATS = [["Positioning", "SlidingTackle"]]
+CORR_STATS = [["Positioning", "SlidingTackle"], ["Acceleration", "Curve"]]
