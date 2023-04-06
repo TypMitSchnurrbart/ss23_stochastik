@@ -23,7 +23,8 @@ from src.origin_analysis import (
 
 from src.correlation_analysis import (
     get_correlation_data,
-    compute_correlation_matrix
+    compute_correlation_matrix,
+    regression_analysis
 )
 
 
@@ -35,7 +36,7 @@ def data_import(path):
     if ".csv" in path:
         
         # Read the first line for the identation
-        with open(path, "r") as data_file:
+        with open(path, "r", encoding="utf-8") as data_file:
             data_ident = data_file.readline()
             data_ident = data_ident.split(",")
 
@@ -63,4 +64,7 @@ if __name__ == "__main__":
     # Correlation Analysis
     correlation_data, ident = get_correlation_data(data=np_data, ident=data_ident)
     compute_correlation_matrix(data=correlation_data, ident=ident)
+
+    # Make regression with interesting factors
+    regression_analysis(data=correlation_data, ident=ident)
 
