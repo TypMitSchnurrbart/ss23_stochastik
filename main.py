@@ -11,7 +11,7 @@
 """
 
 #===== LIBRARIES =====================================
-from matplotlib import pyplot as plt
+import numpy as np
 
 #===== MODULES =======================================
 from src.origin_analysis import (
@@ -27,6 +27,10 @@ from src.correlation_analysis import (
     regression_analysis
 )
 
+from src.age_worth_analysis import (
+    ageWorth,
+    age_hist
+)
 
 #===== FUNCTIONS =====================================
 def data_import(path):
@@ -46,23 +50,45 @@ def data_import(path):
     return data_ident, data
 
 
+def np_data_import(path):
+    
+    if ".csv" in path:
+        
+        # Read the first line for the identation
+        with open(path, "r") as data_file:
+            data_ident = data_file.readline()
+            data_ident = data_ident.split(",")
+
+        # Read the data
+        data = np.genfromtxt(path, delimiter=",", skip_header=True, usecols=np.arange(0, len(data_ident)))
+
+    return data_ident, data
+
+
+
 #===== MAIN ==========================================
 if __name__ == "__main__":
 
     # Data import
-    data_ident, np_data = data_import(path="./data/fifa19.csv")
+    np_data_ident, np_data = np_data_import(path="./data/fifa19.csv")
+    data_ident, data_dict = data_import(path="./data/fifa19.csv")
+
+    # Quick histogramm of the age of players
+    age_hist(data=np_data, ident=np_data_ident)
+    ageWorth()
 
     # Origin Analysis
-    origin_data = get_origin_stats(data=np_data, ident=data_ident)
+    origin_data = get_origin_stats(data=data_dict, ident=data_ident)
 
     visualize_origin_data(data=origin_data)
     analyze_strong_foot(data=origin_data)
     origin_to_speed(data=origin_data)
 
     # Correlation Analysis
-    correlation_data, ident = get_correlation_data(data=np_data, ident=data_ident)
+    correlation_data, ident = get_correlation_data(data=data_dict, ident=data_ident)
     compute_correlation_matrix(data=correlation_data, ident=ident)
 
     # Make regression with interesting factors
     regression_analysis(data=correlation_data, ident=ident)
+
 
