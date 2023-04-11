@@ -85,7 +85,7 @@ def regression_analysis(data : dict, ident: list):
         pearson = round(np.corrcoef(data[stat_pair[0]], data[stat_pair[1]])[0][1], 3)
 
         # Make the scatter plot with the points of interest
-        plt.scatter(data[stat_pair[0]], data[stat_pair[1]], alpha=0.4)
+        plt.scatter(data[stat_pair[0]], data[stat_pair[1]], alpha=0.25)
 
 
         # Perform the linear Regression
