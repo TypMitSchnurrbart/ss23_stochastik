@@ -2,10 +2,11 @@
     Module to generate stats for heros,
     that are correlating!
 
-    author:     Marco Mollo,
-                Nick Nowak,
+    authors:     Marco Mollo
+                Nick Nowak
                 Manuel Guenter
                 Alexander Mueller
+                Daniel Alf
 
     date:       15.05.2023
     version:    0.0.1
