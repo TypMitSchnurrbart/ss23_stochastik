@@ -64,8 +64,8 @@ if __name__ == "__main__":
 
     # TODO: Kovarianzmatrix der Variablen
     cov = np.array([[200.0, -135.0, 60.0],
-                    [-135.0, 187.4375, 50.0],
-                    [60.0, 50.0, 200.0]])
+                    [-135.0, 187.4375, -50.0],
+                    [60.0, -50.0, 200.0]])
 
     # Erzeugung der multivariaten normalverteilten Zufallsvariablen
     mvn = multivariate_normal(mean=mean, cov=cov)
