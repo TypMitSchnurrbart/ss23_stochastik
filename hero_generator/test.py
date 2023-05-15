@@ -12,9 +12,11 @@
     version:    0.0.1
 
     TODO
-        - Understand the task
-        - Find a conecept of hero versions
-        - Implement a generator based on the chosen concept
+        - Think about changing the height variance
+        - Cov of I and S not granted!
+
+        - IS THIS EVEN CORRECT? Bc our results leave the
+          given result spaces! But would be weird to stick to those smh
 
 """
 
@@ -32,7 +34,7 @@ def generate_random_numbers(mean, covariance_matrix, num_samples):
     
     # Generate uncorrelated random numbers
     uncorrelated_numbers = np.random.normal(size=(num_variables, num_samples))
-    
+
     # Apply Cholesky decomposition to introduce correlation
     correlated_numbers = np.dot(L, uncorrelated_numbers)
     
