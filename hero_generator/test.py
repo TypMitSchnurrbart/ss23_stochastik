@@ -105,9 +105,12 @@ if __name__ == "__main__":
 
 
     # print every single option given
+    filename = "output.txt"
+    file = open(filename, "w")
     for index, entry in enumerate(rounded_result[0]):
-
-        print(f"{index+1}:\t[{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}]")
+        file.write(f"{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}\n")
+        # print(f"{index+1}:\t[{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}]") 
+    file.close()
 
     # Compute means and correlation matrix
     # of our random numbers to prove the correlation is as wished
