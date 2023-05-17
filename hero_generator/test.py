@@ -55,8 +55,12 @@ if __name__ == "__main__":
                     [-1.35, 187.443, 0.5],
                     [0.59, 0.5, 199.964]])
 
+    cov = np.array([[200.0, -135.0, 60.0],
+                    [-135.0, 187.4375, -50.0],
+                    [60.0, -50.0, 200.0]])
+
     # How many samples we want to produce
-    num_samples = 100
+    num_samples = 100000
 
     # Generate our random sets of numbers
     random_numbers = generate_random_numbers(mean, cov, num_samples)
