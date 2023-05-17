@@ -44,29 +44,47 @@ def generate_random_numbers(mean, covariance_matrix, num_samples):
     return random_numbers
 
 
+def adjust_values(random_list : list, target_list : list):
+
+    adjusted_list = []
+
+    for value in random_list:
+
+        closest_value = min(target_list, key=lambda x: abs(x - value))
+
+        adjusted_list.append(closest_value)
+
+    return adjusted_list
+
+
 #===== MAIN ==========================================
 if __name__ == "__main__":
     
     # Define the correlation
-    mean = [180, 100, 40]
+    mean = [180, 102.5, 40]
 
     # Correlationmatrix
-    cov = np.array([[0.019881, -1.35, 0.59],
-                    [-1.35, 187.443, 0.5],
-                    [0.59, 0.5, 199.964]])
-
     cov = np.array([[200.0, -135.0, 60.0],
                     [-135.0, 187.4375, -50.0],
                     [60.0, -50.0, 200.0]])
 
     # How many samples we want to produce
-    num_samples = 100000
+    num_samples = 2000000
 
     # Generate our random sets of numbers
     random_numbers = generate_random_numbers(mean, cov, num_samples)
 
     # Round for better visual presentation
     rounded_result = np.around(random_numbers, decimals=3)
+
+
+    # Adjust the value to the target lists
+    target_lists = [[160, 180, 200],
+                    [80, 90, 100, 110, 120],
+                    [20, 30, 40, 50, 60]]
+    for index, entry in enumerate(rounded_result):
+        rounded_result[index] = adjust_values(entry, target_lists[index])
+
 
     # print every single option given
     for index, entry in enumerate(rounded_result[0]):
@@ -78,3 +96,5 @@ if __name__ == "__main__":
     print(f"\nMittelwerte:\n{np.mean(random_numbers, axis=1)}\n")
 
     print(f"Kovarianzmatrix:\n{np.cov(random_numbers)}\n")
+
+    print(f"Abweichungen der Kovarianzmatrix:\n{np.cov(random_numbers)-cov}\n")
