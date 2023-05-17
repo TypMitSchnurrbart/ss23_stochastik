@@ -25,6 +25,15 @@ import numpy as np
 
 # ===== FUNCTIONS =====================================
 def generate_random_numbers(mean, covariance_matrix, num_samples):
+    """
+    Compute n samples based on the target mean and covariance
+
+    param - {list[float]} - mean
+    param - {np.array} - covariance_matrix
+    param - {int} - num_samples
+
+    return - {np.array} - random_numbers
+    """
 
     # three random variables searched
     num_variables = 3
@@ -45,10 +54,21 @@ def generate_random_numbers(mean, covariance_matrix, num_samples):
 
 
 def adjust_values(random_list : list, target_list : list):
+    """
+    Translate the continous values of a list to discrete
+    values of a target list depending on min diff
 
+    param - {list[float]} - random_list
+    param - {list[float]} - target_list
+
+    return - {list[float]} - adjusted_list
+    """
+
+    # Rebuild the list with discrete values
     adjusted_list = []
     for value in random_list:
 
+        # Get the closet value, depending on min diff to target
         closest_value = min(target_list, key=lambda x: abs(x - value))
         adjusted_list.append(closest_value)
 
