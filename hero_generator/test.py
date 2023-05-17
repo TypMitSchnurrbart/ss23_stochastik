@@ -47,11 +47,9 @@ def generate_random_numbers(mean, covariance_matrix, num_samples):
 def adjust_values(random_list : list, target_list : list):
 
     adjusted_list = []
-
     for value in random_list:
 
         closest_value = min(target_list, key=lambda x: abs(x - value))
-
         adjusted_list.append(closest_value)
 
     return adjusted_list
@@ -93,8 +91,10 @@ if __name__ == "__main__":
 
     # Compute means and correlation matrix
     # of our random numbers to prove the correlation is as wished
-    print(f"\nMittelwerte:\n{np.mean(random_numbers, axis=1)}\n")
+    print(f"\nInput Means:\n{mean}")
+    print(f"\nSample Means:\n{np.mean(random_numbers, axis=1)}\n")
 
-    print(f"Kovarianzmatrix:\n{np.cov(random_numbers)}\n")
+    print(f"Target Covariance:\n{cov}\n")
+    print(f"Sample Covariance:\n{np.cov(random_numbers)}\n")
 
-    print(f"Abweichungen der Kovarianzmatrix:\n{np.cov(random_numbers)-cov}\n")
+    print(f"Diff Target to Sample:\n{np.cov(random_numbers)-cov}\n")
