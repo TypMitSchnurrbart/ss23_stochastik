@@ -79,11 +79,11 @@ def adjust_values(random_list : list, target_list : list):
 if __name__ == "__main__":
     
     # Define the correlation
-    mean = [180, 102.5, 40]
+    mean = [180, 100, 40]
 
     # Correlationmatrix
-    cov = np.array([[200.0, -135.0, 60.0],
-                    [-135.0, 187.4375, -50.0],
+    cov = np.array([[266.6667, -135.0, 60.0],
+                    [-135.0, 200.0, -50.0],
                     [60.0, -50.0, 200.0]])
 
     # How many samples we want to produce
@@ -97,11 +97,11 @@ if __name__ == "__main__":
 
 
     # Adjust the value to the target lists
-    target_lists = [[160, 180, 200],
-                    [80, 90, 100, 110, 120],
-                    [20, 30, 40, 50, 60]]
-    for index, entry in enumerate(rounded_result):
-        rounded_result[index] = adjust_values(entry, target_lists[index])
+    # target_lists = [[160, 180, 200],
+    #                 [80, 90, 100, 110, 120],
+    #                 [20, 30, 40, 50, 60]]
+    # for index, entry in enumerate(rounded_result):
+    #     rounded_result[index] = adjust_values(entry, target_lists[index])
 
 
     # print every single option given
