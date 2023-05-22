@@ -40,6 +40,8 @@ def generate_random_numbers(mean, covariance_matrix, num_samples):
 
     # Compute L from cholesy
     L = np.linalg.cholesky(covariance_matrix)
+
+    print(f"Cholesky L:\n{L}")  
     
     # Generate uncorrelated random numbers
     uncorrelated_numbers = np.random.normal(size=(num_variables, num_samples))
@@ -94,7 +96,7 @@ if __name__ == "__main__":
                     [60.0, -50.0, np.var(target_lists[2])]])
 
     # How many samples we want to produce
-    num_samples = 2000000
+    num_samples = 2_000_000
 
     # Generate our random sets of numbers
     random_numbers = generate_random_numbers(mean, cov, num_samples)
@@ -104,10 +106,10 @@ if __name__ == "__main__":
 
 
     # Adjust the value to the target lists
-    # for index, entry in enumerate(rounded_result):
-    #     rounded_result[index] = adjust_values(entry, target_lists[index])
+    for index, entry in enumerate(rounded_result):
+        rounded_result[index] = adjust_values(entry, target_lists[index])
 
-
+    '''
     # print every single option given
     filename = "output.txt"
     file = open(filename, "w")
@@ -115,6 +117,7 @@ if __name__ == "__main__":
         file.write(f"{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}\n")
         # print(f"{index+1}:\t[{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}]") 
     file.close()
+    '''
 
     # Compute means and correlation matrix
     # of our random numbers to prove the correlation is as wished
