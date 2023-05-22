@@ -13,10 +13,7 @@
 
 # ===== IMPORTS =======================================
 import numpy as np
-from bokeh.plotting import figure, output_file, save
-from bokeh.io import export_png
-from bokeh.models import Range1d, Text
-from bokeh.layouts import grid
+import matplotlib.pyplot as plt
 
 
 # ===== FUNCTIONS =====================================
@@ -24,26 +21,13 @@ from bokeh.layouts import grid
 
 # ===== MAIN ==========================================
 if __name__ == "__main__":
+    # false -> erstellt nicht, true -> erstellt
+
+    plot_keine_korrelation_erstellen = True
     filename_korreliert = "output.txt"
-    stats_korreliert = [[], [], []]
-
-    # Kovarianzmatrix für nicht korrelliert
-    print("Start generating stats_normal...")
-    mean = [180, 100, 40]
-    stats = np.array([[266.667, 0.0, 0.0],
-                      [0.0, 200.0, 0.0],
-                      [0.0, 0.0, 200.0]])
-
-    n = 200000
-    stats_normal = [[], [], []]
-    for _ in range(n):
-        abilities = np.random.multivariate_normal(mean, stats)
-        stats_normal[0].append(abilities[0])
-        stats_normal[1].append(abilities[1])
-        stats_normal[2].append(abilities[2])
-    print("Finished generating stats_normal...")
 
     # Read results from file
+    stats_korreliert = [[], [], []]
     with open(filename_korreliert, "r") as file:
         for line in file:
             entry, value1, value2 = line.strip().split(", ")
@@ -52,58 +36,61 @@ if __name__ == "__main__":
             stats_korreliert[2].append(float(value2))
 
     # Plot Größe gegen Intelligenz
-    G_I_plot = figure(title="Größe gegen Intelligenz (Korreliert)",
-                      # width=1200,
-                      # height=800,
-                      match_aspect=True,
-                      x_axis_label='Größe',
-                      y_axis_label='Intelligenz')
-    G_I_plot.scatter(stats_korreliert[0], stats_korreliert[1], color='blue')
-    G_I_plot_2 = figure(title="Größe gegen Intelligenz (Normalverteilt)",
-                        # width=1200,
-                        # height=800,
-                        match_aspect=True,
-                        x_axis_label='Größe',
-                        y_axis_label='Intelligenz')
-    G_I_plot_2.scatter(stats_normal[0], stats_normal[1], color='green')
+    fig1, ax1 = plt.subplots()
+    ax1.grid(True)
+    ax1.set_axisbelow(True)
+    ax1.scatter(stats_korreliert[0], stats_korreliert[1], s=1)
+    ax1.set_title("Größe gegen Intelligenz (Korreliert)")
+    ax1.set_xlabel("Größe")
+    ax1.set_ylabel("Intelligenz")
+    fig1.savefig("plots/G_I_plot.png")
 
     # Plot Größe gegen Stärke
-    G_S_plot = figure(title="Größe gegen Stärke (Korreliert)",
-                      # width=1200,
-                      # height=800,
-                      match_aspect=True,
-                      x_axis_label='Größe',
-                      y_axis_label='Stärke')
-    G_S_plot.scatter(stats_korreliert[0], stats_korreliert[2], color='blue')
-    G_S_plot_2 = figure(title="Größe gegen Stärke (Normalverteilt)",
-                        # width=1200,
-                        # height=800,
-                        match_aspect=True,
-                        x_axis_label='Größe',
-                        y_axis_label='Stärke')
-    G_S_plot_2.scatter(stats_normal[0], stats_normal[2], color='green')
+    fig2, ax2 = plt.subplots()
+    ax2.grid(True)
+    ax2.set_axisbelow(True)
+    ax2.scatter(stats_korreliert[0], stats_korreliert[2], s=1)
+    ax2.set_title("Größe gegen Stärke (Korreliert)")
+    ax2.set_xlabel("Größe")
+    ax2.set_ylabel("Stärke")
+    fig2.savefig("plots/G_S_plot.png")
 
-    G_I_plot.y_range = Range1d(30, 160)
-    G_I_plot.x_range = Range1d(90, 250)
-    G_I_plot_2.y_range = Range1d(30, 160)
-    G_I_plot_2.x_range = Range1d(90, 250)
+    print(f"Sample Covariance:\n{np.cov(stats_korreliert)}\n")
 
-    G_S_plot.y_range = Range1d(-20, 105)
-    G_S_plot.x_range = Range1d(90, 250)
-    G_S_plot_2.y_range = Range1d(-20, 105)
-    G_S_plot_2.x_range = Range1d(90, 250)
+    # Kovarianzmatrix für nicht korrelliert
+    if plot_keine_korrelation_erstellen:
+        mean = [180, 100, 40]
+        stats = np.array([[266.667, 0.0, 0.0],
+                          [0.0, 200.0, 0.0],
+                          [0.0, 0.0, 200.0]])
 
-    # Create layout / grid and save to html file
-    combined_plot = grid([
-        [G_I_plot, G_I_plot_2],
-        [G_S_plot, G_S_plot_2]
-    ])
+        n = 200000
+        stats_normal = [[], [], []]
+        for _ in range(n):
+            abilities = np.random.multivariate_normal(mean, stats)
+            stats_normal[0].append(abilities[0])
+            stats_normal[1].append(abilities[1])
+            stats_normal[2].append(abilities[2])
 
-    # Save all plots as png
-    export_png(combined_plot, filename="plots/combined_plot.png")
-    export_png(G_I_plot, filename="plots/G_I_plot.png")
-    export_png(G_S_plot, filename="plots/G_S_plot.png")
-    export_png(G_I_plot_2, filename="plots/G_I_plot_2.png")
-    export_png(G_S_plot_2, filename="plots/G_S_plot_2.png")
+        # Plot Größe gegen Intelligenz
+        fig3, ax3 = plt.subplots()
+        ax3.grid(True)
+        ax3.set_axisbelow(True)
+        ax3.scatter(stats_normal[0], stats_normal[1], s=1)
+        ax3.set_title("Größe gegen Intelligenz (Keine Korrelation)")
+        ax3.set_xlabel("Größe")
+        ax3.set_ylabel("Intelligenz")
+        fig3.savefig("plots/G_I_plot_2.png")
 
-    print(f"Sample Covariance:\n{np.cov(stats_normal)}\n")
+        # Plot Größe gegen Stärke
+        fig4, ax4 = plt.subplots()
+        ax4.grid(True)
+        ax4.set_axisbelow(True)
+        ax4.scatter(stats_normal[0], stats_normal[2], s=1)
+        ax4.set_title("Größe gegen Stärke (Keine Korrelation)")
+        ax4.set_xlabel("Größe")
+        ax4.set_ylabel("Stärke")
+        fig4.savefig("plots/G_S_plot_2.png")
+
+        # Print Cov-matrix
+        print(f"Sample Covariance:\n{np.cov(stats_normal)}\n")
