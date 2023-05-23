@@ -93,4 +93,4 @@ if __name__ == "__main__":
         fig4.savefig("plots/G_S_plot_2.png")
 
         # Print Cov-matrix
-        print(f"Sample Covariance:\n{np.cov(stats_normal)}\n")
+        print(f"Keine Korrelation Covariance:\n{np.cov(stats_normal)}\n")
