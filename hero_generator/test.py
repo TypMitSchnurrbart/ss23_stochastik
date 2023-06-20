@@ -109,15 +109,9 @@ if __name__ == "__main__":
     for index, entry in enumerate(rounded_result):
         rounded_result[index] = adjust_values(entry, target_lists[index])
 
-    '''
     # print every single option given
-    filename = "output.txt"
-    file = open(filename, "w")
     for index, entry in enumerate(rounded_result[0]):
-        file.write(f"{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}\n")
-        # print(f"{index+1}:\t[{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}]") 
-    file.close()
-    '''
+        print(f"{index+1}:\t[{entry}, {rounded_result[1][index]}, {rounded_result[2][index]}]") 
 
     # Compute means and correlation matrix
     # of our random numbers to prove the correlation is as wished
@@ -126,5 +120,7 @@ if __name__ == "__main__":
 
     print(f"Target Covariance:\n{cov}\n")
     print(f"Sample Covariance:\n{np.cov(random_numbers)}\n")
+
+    print(f"Adjusted Covariance:\n{np.cov(rounded_result)}\n")
 
     print(f"Diff Target to Sample:\n{np.cov(random_numbers)-cov}\n")
