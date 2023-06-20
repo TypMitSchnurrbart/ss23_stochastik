@@ -81,9 +81,9 @@ def adjust_values(random_list : list, target_list : list):
 if __name__ == "__main__":
 
     # Definte target list
-    target_lists = [[160, 180, 200],
-                    [80, 90, 100, 110, 120],
-                    [20, 30, 40, 50, 60]]
+    target_lists = [[160, 180, 200],            # Größe
+                    [80, 90, 100, 110, 120],    # Intelligenz
+                    [20, 30, 40, 50, 60]]       # Stärke
 
     # Define the correlation
     mean = [np.mean(target_lists[0]),
@@ -92,8 +92,8 @@ if __name__ == "__main__":
 
     # Correlationmatrix
     cov = np.array([[np.var(target_lists[0]), -135.0, 60.0],
-                    [-135.0, np.var(target_lists[1]), -50.0],
-                    [60.0, -50.0, np.var(target_lists[2])]])
+                    [-135.0, np.var(target_lists[1]), 0.0],
+                    [60.0, 0.0, np.var(target_lists[2])]])
 
     # How many samples we want to produce
     num_samples = 2_000_000
@@ -121,6 +121,4 @@ if __name__ == "__main__":
     print(f"Target Covariance:\n{cov}\n")
     print(f"Sample Covariance:\n{np.cov(random_numbers)}\n")
 
-    print(f"Adjusted Covariance:\n{np.cov(rounded_result)}\n")
-
-    print(f"Diff Target to Sample:\n{np.cov(random_numbers)-cov}\n")
+    print(f"Absolute Error:\n{np.cov(random_numbers)-cov}\n")
