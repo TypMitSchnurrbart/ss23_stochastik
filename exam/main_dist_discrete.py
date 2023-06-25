@@ -71,10 +71,10 @@ if __name__ == "__main__":
     ########################################
     # Wenn normal verteilt. Also nur Erwartungswert und std angegeben!
     # NORM
-    erwartung = 100
-    std = 15
+    erwartung = 23.9
+    std = 6.4
     untere = 119.5
-    obere = 110
+    obere = 19.0
     target = 0.01
     print(f"norm -> F({untere}) =\t{norm.cdf(untere, erwartung, std)}")
     print(f"norm -> F({obere}) =\t{norm.cdf(obere, erwartung, std)}")
