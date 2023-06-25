@@ -17,7 +17,7 @@
 """
 
 #===== IMPORTS =======================================
-from scipy.stats import poisson, binom, geom, hypergeom
+from scipy.stats import poisson, binom, geom, hypergeom, norm
 
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
@@ -66,6 +66,18 @@ if __name__ == "__main__":
     print(f"hyper(X={k})  =\t{hypergeom.pmf(k, gesamt, N, n)}")
     print(f"hyper(X<={k}) =\t{hypergeom.cdf(k, gesamt, N, n)}")
     print(f"hyper E(X) = {n * N/gesamt}")
-    print(f"hyper Var(X) = {n * N/gesamt * (1-N/gesamt) * (gesamt-n)/(gesamt-1)}")
+    print(f"hyper Var(X) = {n * N/gesamt * (1-N/gesamt) * (gesamt-n)/(gesamt-1)}\n")
+
+    ########################################
+    # Wenn normal verteilt. Also nur Erwartungswert und std angegeben!
+    # NORM
+    erwartung = 100
+    std = 15
+    untere = 119.5
+    obere = 110
+    target = 0.01
+    print(f"norm -> F({untere}) =\t{norm.cdf(untere, erwartung, std)}")
+    print(f"norm -> F({obere}) =\t{norm.cdf(obere, erwartung, std)}")
+    print(f"norm -> F(x_{target}) =\t{norm.ppf(target, erwartung, std)}")
 
 
