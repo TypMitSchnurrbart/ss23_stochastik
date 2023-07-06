@@ -17,6 +17,7 @@
 from src.base_desc import *
 import statistics
 import numpy as np
+from scipy.stats import pearsonr
 
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
@@ -27,7 +28,9 @@ if __name__ == "__main__":
 
 
     if len(data_cov) > 0:
-        print(f"Cov:\t{np.cov(data, data_cov)[0, 1]}")
+        print(f"""Cov:\t{np.cov(data, data_cov)[0, 1]}
+        Pearson:\t{pearsonr(data, data_cov)}
+        """)
 
 
     data.sort()
