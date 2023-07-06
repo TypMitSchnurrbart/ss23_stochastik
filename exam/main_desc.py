@@ -22,17 +22,20 @@ from scipy.stats import pearsonr
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
 
-    data = [125, 100, 130, 150, 150, 250, 250, 250]
-
+    # data = [125, 100, 130, 150, 150, 250, 250, 250]
+    data = [1, 1, 1, 2, 3, 3, 3, 4, 5, 5]
     data_cov = []
 
+    # Quantil berechnen
+    q = 0.5
 
     if len(data_cov) > 0:
-        print(f"""
-        Cov:\t{np.cov(data, data_cov)[0, 1]}
-        Pearson:\t{pearsonr(data, data_cov)[1]}
+        print(f"""Cov:\t{np.cov(data, data_cov)[0, 1]}
+        Pearson:\t{pearsonr(data, data_cov)}
         """)
 
+    print(quantil(data, 0.75))
+    print(quantil(data, 0.25))
 
     data.sort()
 
@@ -43,5 +46,7 @@ if __name__ == "__main__":
     Median:\t{median(data)}
     Varianz:\t{variance(data)}
     STD:\t{deviation(data)}
-    
+    Q_{q}:\t{quantil(data, q)}
+    IQA:\t{quantil(data, 0.75) - quantil(data, 0.25)}
+    Spannweite:\t{data[-1] - data[0]}
     """)
