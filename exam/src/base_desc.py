@@ -15,6 +15,7 @@
 
 #===== IMPORTS =======================================
 import math
+import numpy as np
 
 #===== FUNCTIONS =====================================
 def median(stats : list):
@@ -53,3 +54,15 @@ def deviation(data : list):
     """Quick STD Deviation [VERIFIED]"""
 
     return math.sqrt(variance(data))
+
+
+def quantil(data: list, quantil: float):
+    """Quick Quantil [VERIFIED]"""
+
+    data.sort()
+    index = quantil * (len(data) - 1)
+    if quantil * len(data) % 1 == 0:
+        return (data[int(index)] + data[int(index) + 1]) / 2
+    else:
+        return data[int(np.ceil(index))]
+    
