@@ -15,13 +15,26 @@
 
 #===== IMPORTS =======================================
 from src.base_desc import *
+import statistics
+import numpy as np
 
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
 
-    data = [0.0, 1.0, 2.0, 5.0, 12.0]
+    data = [125, 100, 130, 150, 150, 250, 250, 250]
+
+    data_cov = []
+
+
+    if len(data_cov) > 0:
+        print(f"Cov:\t{np.cov(data, data_cov)[0, 1]}")
+
+
+    data.sort()
 
     print(f"""
+    {data}
+    Mode:\t{statistics.mode(data)}
     Average:\t{average(data)}
     Median:\t{median(data)}
     Varianz:\t{variance(data)}

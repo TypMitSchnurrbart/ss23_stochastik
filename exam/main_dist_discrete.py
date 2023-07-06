@@ -37,11 +37,13 @@ if __name__ == "__main__":
     ########################################
     # Wenn feste Anzahl versuche mit Erfolg oder nicht! p = const. 
     # Binominal - Bino(X=versuche)
-    gesamt = 10
-    p = 0.3
-    k = 2
+    gesamt = 100
+    p = 0.005
+    k = 0
+    target = 0.99
     print(f"Binom(X={k})  =\t{binom.pmf(k, gesamt, p)}")
     print(f"Binom(X<={k}) =\t{binom.cdf(k, gesamt, p)}")
+    print(f"Binom(X_{target}) =\t{binom.ppf(target, gesamt, p)}")
     print(f"Binom E(X) = {gesamt*p}")
     print(f"Binom Var(X) = {gesamt*p*(1-p)}\n")
 
@@ -71,11 +73,11 @@ if __name__ == "__main__":
     ########################################
     # Wenn normal verteilt. Also nur Erwartungswert und std angegeben!
     # NORM
-    erwartung = 23.9
-    std = 6.4
-    untere = 119.5
-    obere = 19.0
-    target = 0.01
+    erwartung = 1200
+    std = 111.8
+    untere = 1000
+    obere = 1000
+    target = 0.05
     print(f"norm -> F({untere}) =\t{norm.cdf(untere, erwartung, std)}")
     print(f"norm -> F({obere}) =\t{norm.cdf(obere, erwartung, std)}")
     print(f"norm -> F(x_{target}) =\t{norm.ppf(target, erwartung, std)}")
