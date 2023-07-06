@@ -55,14 +55,12 @@ def deviation(data : list):
 
     return math.sqrt(variance(data))
 
-
 def quantil(data: list, quantil: float):
     """Quick Quantil [VERIFIED]"""
 
     data.sort()
-    index = quantil * (len(data) - 1)
-    if quantil * len(data) % 1 == 0:
-        return (data[int(index)] + data[int(index) + 1]) / 2
+    index = int(quantil * (len(data) - 1))
+    if (quantil * len(data)) % 1 == 0.0:
+        return (data[index] + data[index + 1]) / 2
     else:
-        return data[int(np.ceil(index))]
-    
+        return data[int(np.ceil(quantil * (len(data)))-1)]
