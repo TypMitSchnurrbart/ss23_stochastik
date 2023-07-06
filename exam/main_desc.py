@@ -22,8 +22,7 @@ from scipy.stats import pearsonr
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
 
-    # data = [125, 100, 130, 150, 150, 250, 250, 250]
-    data = [1, 1, 1, 2, 3, 3, 3, 4, 5, 5]
+    data = [125, 100, 130, 140, 150, 250, 250, 250]
     data_cov = []
 
     # Quantil berechnen
@@ -33,9 +32,6 @@ if __name__ == "__main__":
         print(f"""Cov:\t{np.cov(data, data_cov)[0, 1]}
         Pearson:\t{pearsonr(data, data_cov)}
         """)
-
-    print(quantil(data, 0.75))
-    print(quantil(data, 0.25))
 
     data.sort()
 

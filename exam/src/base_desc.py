@@ -60,7 +60,7 @@ def quantil(data: list, quantil: float):
 
     data.sort()
     index = int(quantil * (len(data) - 1))
-    if quantil * len(data) % 1 == 0:
+    if (quantil * len(data)) % 1 == 0.0:
         return (data[index] + data[index + 1]) / 2
     else:
-        return data[int(np.ceil(quantil * len(data)))]
+        return data[int(np.ceil(quantil * (len(data)))-1)]
