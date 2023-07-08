@@ -17,19 +17,23 @@
 from src.base_desc import *
 import statistics
 import numpy as np
-from scipy.stats import pearsonr
+from scipy.stats import pearsonr, mode
+from collections import Counter
+import os
 
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
 
-    data = [125, 100, 130, 140, 150, 250, 250, 250]
-    data_cov = []
+    data = [1, 1, 2, 2, 3, 3]
+    data_cov = [1, 1, 2, 2, 3, 3]
 
+    modalwerte = [k for k, v in Counter(data).items() if v == max(Counter(data).values())]
     # Quantil berechnen
-    q = 0.5
+    q = 0.1
 
     if len(data_cov) > 0:
-        print(f"""Cov:\t{np.cov(data, data_cov)[0, 1]}
+        print(f"""
+        Cov:\t{np.cov(data, data_cov)[0, 1]}
         Pearson:\t{pearsonr(data, data_cov)}
         """)
 
@@ -37,12 +41,22 @@ if __name__ == "__main__":
 
     print(f"""
     {data}
-    Mode:\t{statistics.mode(data)}
     Average:\t{average(data)}
     Median:\t{median(data)}
+    Modalwert:\t{sorted(modalwerte)}
     Varianz:\t{variance(data)}
     STD:\t{deviation(data)}
     Q_{q}:\t{quantil(data, q)}
     IQA:\t{quantil(data, 0.75) - quantil(data, 0.25)}
     Spannweite:\t{data[-1] - data[0]}
     """)
+
+    print(f""" Alle Quartile:          
+    Q_{0.25}:\t{quantil(data, 0.25)}
+    Q_{0.5}:\t{quantil(data, 0.5)}
+    Q_{0.75}:\t{quantil(data, 0.75)}
+    """)
+
+    print(haeufigkeit(data))
+    #getHistogram(data)
+    #getEmpirisch(data)

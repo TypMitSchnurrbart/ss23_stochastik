@@ -16,6 +16,11 @@
 #===== IMPORTS =======================================
 import math
 import numpy as np
+import pandas as pd
+from collections import Counter
+from tabulate import tabulate
+import matplotlib.pyplot as plt
+from scipy.stats import mode
 
 #===== FUNCTIONS =====================================
 def median(stats : list):
@@ -64,3 +69,52 @@ def quantil(data: list, quantil: float):
         return (data[index] + data[index + 1]) / 2
     else:
         return data[int(np.ceil(quantil * (len(data)))-1)]
+
+def haeufigkeit(data: list):
+    """Quick Haeufigkeit [VERIFIED]"""
+    
+    kategorien = set(data)
+    anzahl = len(data)
+
+    abs_haeufigkeit = Counter(data)
+    rel_haeufigkeit = {k: v / anzahl for k, v in abs_haeufigkeit.items()}
+    
+    # tabelle = pd.DataFrame({'Kategorie': ['Absolute Häufigkeit', 'Relative Häufigkeit'],
+    #     **{k: [abs_haeufigkeit[k], rel_haeufigkeit[k]] for k in kategorien}})
+    
+    # pd.set_option('display.max_colwidth', None)
+    # return tabelle.to_string(index=False, justify='center')
+
+    data = [['Absolute Häufigkeit'] + [abs_haeufigkeit[k] for k in kategorien],
+        ['Relative Häufigkeit'] + [rel_haeufigkeit[k] for k in kategorien]]
+
+    headers = ['Kategorie'] + list(kategorien)
+
+    table = tabulate(data, headers, tablefmt='pipe')
+    return table
+
+def getHistogram(data: list):
+
+    abs_haeufigkeit = Counter(data)
+
+    categories = list(abs_haeufigkeit.keys())
+    frequencies = list(abs_haeufigkeit.values())
+
+    plt.bar(categories, frequencies)
+    plt.xlabel('Kategorie')
+    plt.ylabel('Absolute Häufigkeit')
+    plt.title('Histogramm der absoluten Häufigkeiten')
+    plt.show()
+
+def getEmpirisch(data: list):
+    abs_haeufigkeit = Counter(data)
+
+    categories = sorted(abs_haeufigkeit.keys())
+    frequencies = np.cumsum(list(abs_haeufigkeit.values())) / len(data)
+
+    plt.plot(categories, frequencies, drawstyle='steps-post')
+    plt.xlabel('Kategorie')
+    plt.ylabel('Empirische Verteilungsfunktion')
+    plt.title('Empirische Verteilungsfunktion')
+    plt.ylim([0, 1])
+    plt.show()

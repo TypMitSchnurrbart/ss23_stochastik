@@ -22,13 +22,14 @@ from scipy.stats import poisson, binom, geom, hypergeom, norm
 #===== FUNCTIONS =====================================
 if __name__ == "__main__":
 
-    data = [0.0, 1.0, 2.0, 5.0, 12.0]
+    data = [1, 1, 1, 1, 2, 3, 3, 3]
+    #data = [1, 1, 1, 2, 2, 2, 3, 3]
 
     ########################################
     # Wenn Rate gegeben und unabhängig zufällig
     # POISSON - Verteilung Po(X=versuche)
-    rate = 9
-    versuche = 5
+    rate = 1
+    versuche = 0
     print(f"Po(X={versuche}) mit Rate {rate}  =\t{poisson.pmf(k=versuche, mu=rate)}")
     print(f"Po(X<={versuche}) mit Rate {rate} =\t{poisson.cdf(k=versuche, mu=rate)}")
     print(f"Po E(X) = {rate}")
@@ -37,8 +38,8 @@ if __name__ == "__main__":
     ########################################
     # Wenn feste Anzahl versuche mit Erfolg oder nicht! p = const. 
     # Binominal - Bino(X=versuche)
-    gesamt = 100
-    p = 0.005
+    gesamt = 3
+    p = 0.3
     k = 0
     target = 0.99
     print(f"Binom(X={k})  =\t{binom.pmf(k, gesamt, p)}")
@@ -51,10 +52,12 @@ if __name__ == "__main__":
     ########################################
     # Wie lange bis etwas eintritt, unabhängig; zwei Möglichkeiten; Wie lange bis das erste...?
     # Geometrisch
-    p = 0.2
-    k = 3
+    p = 0.7
+    k = 1
+    target = 0.9
     print(f"geom(X={k})  =\t{geom.pmf(k, p)}")
     print(f"geom(X<={k}) =\t{geom.cdf(k, p)}")
+    print(f"geom(X_{target}) =\t{geom.ppf(target, p)}")
     print(f"geom E(X) = {1/p}")
     print(f"geom Var(X) = {(1-p) / (p**2)}\n")
 
