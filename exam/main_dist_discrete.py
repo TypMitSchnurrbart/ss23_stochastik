@@ -28,8 +28,8 @@ if __name__ == "__main__":
     ########################################
     # Wenn Rate gegeben und unabhängig zufällig
     # POISSON - Verteilung Po(X=versuche)
-    rate = 1
-    versuche = 0
+    rate = 15
+    versuche = 1
     print(f"Po(X={versuche}) mit Rate {rate}  =\t{poisson.pmf(k=versuche, mu=rate)}")
     print(f"Po(X<={versuche}) mit Rate {rate} =\t{poisson.cdf(k=versuche, mu=rate)}")
     print(f"Po E(X) = {rate}")
@@ -38,9 +38,9 @@ if __name__ == "__main__":
     ########################################
     # Wenn feste Anzahl versuche mit Erfolg oder nicht! p = const. 
     # Binominal - Bino(X=versuche)
-    gesamt = 3
-    p = 0.3
-    k = 0
+    gesamt = 10
+    p = 0.25
+    k = 5
     target = 0.99
     print(f"Binom(X={k})  =\t{binom.pmf(k, gesamt, p)}")
     print(f"Binom(X<={k}) =\t{binom.cdf(k, gesamt, p)}")
@@ -52,8 +52,8 @@ if __name__ == "__main__":
     ########################################
     # Wie lange bis etwas eintritt, unabhängig; zwei Möglichkeiten; Wie lange bis das erste...?
     # Geometrisch
-    p = 0.7
-    k = 1
+    p = 0.25
+    k = 5
     target = 0.9
     print(f"geom(X={k})  =\t{geom.pmf(k, p)}")
     print(f"geom(X<={k}) =\t{geom.cdf(k, p)}")
@@ -64,9 +64,9 @@ if __name__ == "__main__":
     ########################################
     # Wenn zwei Gruppen gegeben; begrenzte Gesamheit ohne zurücklegen; Qualitätkontrollen
     # HYPERGeometrisch
-    gesamt = 60    # Anzahl Tiere
-    N = 10          # Davon 40 Hunde
-    n = 3          # Anzahl ausgewählter Tiere
+    gesamt = 100    # Anzahl Tiere
+    N = 5          # Davon 40 Hunde
+    n = 4          # Anzahl ausgewählter Tiere
     k = 0           # Wahrscheinlichkeit 4 Hunde zu finden, wenn ich 12 ziehe aus 100 Tieren mit 40 Hunden
     print(f"hyper(X={k})  =\t{hypergeom.pmf(k, gesamt, N, n)}")
     print(f"hyper(X<={k}) =\t{hypergeom.cdf(k, gesamt, N, n)}")
@@ -76,13 +76,13 @@ if __name__ == "__main__":
     ########################################
     # Wenn normal verteilt. Also nur Erwartungswert und std angegeben!
     # NORM
-    erwartung = 1200
-    std = 111.8
-    untere = 1000
-    obere = 1000
-    target = 0.05
-    print(f"norm -> F({untere}) =\t{norm.cdf(untere, erwartung, std)}")
+    erwartung = 0.6
+    std = 0.08
+    obere = 0.5
+    untere = 295
+    target = 0.01
     print(f"norm -> F({obere}) =\t{norm.cdf(obere, erwartung, std)}")
+    print(f"norm -> F({untere}) =\t{norm.cdf(untere, erwartung, std)}")
     print(f"norm -> F(x_{target}) =\t{norm.ppf(target, erwartung, std)}")
 
 
